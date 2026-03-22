@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>chaiwind demo</title>
+  <!-- load chaiwind in head — DOMContentLoaded handles timing -->
+  <script src="chaiwind.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+  </style>
+</head>
+<body>
+
+  <!-- hero -->
+  <div class="chai-bg-chaicode-dark chai-p-12 chai-text-center">
+    <h1 class="chai-text-white chai-text-4xl chai-font-bold chai-mb-4">
+      chaiwind.js
+    </h1>
+    <p class="chai-text-gray chai-text-lg chai-mb-8">
+      utility-first CSS engine — chai-* classes, inline styles
+    </p>
+    <div class="chai-flex chai-justify-center chai-gap-4">
+      <button class="chai-bg-chai chai-text-white chai-p-3 chai-rounded-md chai-cursor-pointer chai-font-bold">
+        ☕ Hitesh sir
+      </button>
+      <button class="chai-bg-piyush chai-text-white chai-p-3 chai-rounded-md chai-cursor-pointer chai-font-bold">
+        🩷 Piyush sir
+      </button>
+      <button class="chai-bg-macos-blue chai-text-white chai-p-3 chai-rounded-md chai-cursor-pointer chai-font-bold">
+        🍎 Akash sir
+      </button>
+    </div>
+  </div>
+
+  <!-- cards -->
+  <div class="chai-bg-white chai-p-10">
+    <div class="chai-flex chai-gap-6 chai-justify-center">
+
+      <!-- hitesh card -->
+      <div class="chai-bg-dudh chai-p-6 chai-rounded-lg chai-shadow-chai chai-w-full">
+        <p class="chai-text-masala chai-font-bold chai-text-xl chai-mb-3">
+          ☕ Chai palette
+        </p>
+        <p class="chai-text-gray chai-text-sm chai-mb-4">
+          Warm, earthy, tapri-coded
+        </p>
+        <div class="chai-flex chai-gap-2">
+          <span class="chai-bg-chai chai-text-white chai-p-2 chai-rounded-full chai-text-xs chai-font-bold">chai</span>
+          <span class="chai-bg-adrak chai-text-white chai-p-2 chai-rounded-full chai-text-xs chai-font-bold">adrak</span>
+          <span class="chai-bg-masala chai-text-white chai-p-2 chai-rounded-full chai-text-xs chai-font-bold">masala</span>
+          <span class="chai-bg-kulhad chai-text-white chai-p-2 chai-rounded-full chai-text-xs chai-font-bold">kulhad</span>
+        </div>
+      </div>
+
+      <!-- piyush card -->
+      <div class="chai-bg-blush chai-p-6 chai-rounded-lg chai-shadow-piyush chai-w-full">
+        <p class="chai-text-piyush-dark chai-font-bold chai-text-xl chai-mb-3">
+          🩷 Pink palette
+        </p>
+        <p class="chai-text-gray chai-text-sm chai-mb-4">
+          Hot pink to soft blush
+        </p>
+        <div class="chai-flex chai-gap-2">
+          <span class="chai-bg-piyush chai-text-white chai-p-2 chai-rounded-full chai-text-xs chai-font-bold">piyush</span>
+          <span class="chai-bg-rose chai-text-white chai-p-2 chai-rounded-full chai-text-xs chai-font-bold">rose</span>
+          <span class="chai-bg-fuschia chai-text-white chai-p-2 chai-rounded-full chai-text-xs chai-font-bold">fuschia</span>
+        </div>
+      </div>
+
+      <!-- akash card -->
+      <div class="chai-bg-silver chai-p-6 chai-rounded-lg chai-shadow-mac chai-w-full">
+        <p class="chai-text-midnight chai-font-bold chai-text-xl chai-mb-3">
+          🍎 Mac palette
+        </p>
+        <p class="chai-text-gray chai-text-sm chai-mb-4">
+          Clean, minimal, premium
+        </p>
+        <div class="chai-flex chai-gap-2">
+          <span class="chai-bg-midnight chai-text-white chai-p-2 chai-rounded-full chai-text-xs chai-font-bold">midnight</span>
+          <span class="chai-bg-spacegray chai-text-white chai-p-2 chai-rounded-full chai-text-xs chai-font-bold">spacegray</span>
+          <span class="chai-bg-macos-blue chai-text-white chai-p-2 chai-rounded-full chai-text-xs chai-font-bold">macos-blue</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- usage example -->
+  <div class="chai-bg-midnight chai-p-10 chai-text-center">
+    <p class="chai-text-white chai-text-2xl chai-font-bold chai-mb-2">
+      Zero config. Just add classes.
+    </p>
+    <p class="chai-text-gray chai-mb-6">
+      chai-* prefix → parsed → inline style applied → class removed
+    </p>
+    <div class="chai-bg-chaicode chai-text-white chai-p-4 chai-rounded-lg chai-text-lg chai-font-bold chai-shadow-chai">
+      chai-bg-chaicode + chai-p-4 + chai-rounded-lg
+    </div>
+  </div>
+
+</body>
+</html>

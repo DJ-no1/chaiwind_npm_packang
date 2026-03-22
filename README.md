@@ -14,18 +14,40 @@ no config, no stylesheet required.
 npm install chaiwind
 ```
 
-VS Code autocomplete for all `chai-*` classes is set up automatically.
-Restart VS Code once after install to activate suggestions.
+After installation, import `chaiwind.css` to enable autocomplete in your IDE (see Setup below).
+
+---
+
+## Quick Demo
+
+Open `node_modules/chaiwind/demo/demo.html` in your browser to see chaiwind in action!
 
 ---
 
 ## Setup
 
+### 1. Import CSS (for autocomplete)
+
+Add this to your main CSS/HTML file to enable IDE autocomplete:
+
+```html
+<link rel="stylesheet" href="node_modules/chaiwind/chaiwind.css" />
+```
+
+Or in CSS/SCSS:
+
+```css
+@import "chaiwind/chaiwind.css";
+```
+
+**Note:** This CSS file is only for autocomplete suggestions in your editor. The actual styling is done by the JavaScript at runtime.
+
+### 2. Add the JavaScript
+
 Add the script tag at the **bottom of your body** tag:
 
 ```html
 <body>
-
   <!-- your HTML here -->
 
   <script src="node_modules/chaiwind/chaiwind.js"></script>
@@ -35,9 +57,7 @@ Add the script tag at the **bottom of your body** tag:
 Then use `chai-*` classes on any element:
 
 ```html
-<div class="chai-bg-chai chai-p-4 chai-rounded-md chai-text-white">
-  Haanji!
-</div>
+<div class="chai-bg-chai chai-p-4 chai-rounded-md chai-text-white">Haanji!</div>
 
 <div class="chai-flex chai-items-center chai-justify-between chai-gap-4">
   <p class="chai-fs-lg chai-font-bold chai-text-masala">Hitesh sir</p>
@@ -65,30 +85,34 @@ see what was applied by inspecting the element.
 ## Color tokens
 
 ### ChaiCode brand
-| Class | Value |
-|---|---|
-| `chai-bg-chaicode` | `#f97316` |
+
+| Class                   | Value     |
+| ----------------------- | --------- |
+| `chai-bg-chaicode`      | `#f97316` |
 | `chai-bg-chaicode-dark` | `#1a1a2e` |
 
 ### Hitesh sir
-| Class | Value |
-|---|---|
-| `chai-bg-chai` | `#c8843a` |
-| `chai-bg-adrak` | `#d4a056` |
+
+| Class            | Value     |
+| ---------------- | --------- |
+| `chai-bg-chai`   | `#c8843a` |
+| `chai-bg-adrak`  | `#d4a056` |
 | `chai-bg-masala` | `#8b4513` |
 | `chai-bg-kulhad` | `#b5651d` |
 
 ### Piyush sir
-| Class | Value |
-|---|---|
-| `chai-bg-piyush` | `#ec4899` |
+
+| Class                 | Value     |
+| --------------------- | --------- |
+| `chai-bg-piyush`      | `#ec4899` |
 | `chai-bg-piyush-dark` | `#be185d` |
 
 ### Akash sir
-| Class | Value |
-|---|---|
+
+| Class              | Value     |
+| ------------------ | --------- |
 | `chai-bg-midnight` | `#1d1d1f` |
-| `chai-bg-silver` | `#e8e8ed` |
+| `chai-bg-silver`   | `#e8e8ed` |
 
 Each color token generates three classes: `chai-bg-*`, `chai-text-*`, `chai-border-*`
 
@@ -154,9 +178,15 @@ Scale: 0=0px 1=4px 2=8px 3=12px 4=16px 6=24px 8=32px 10=40px 12=48px
 
 ---
 
-## VS Code autocomplete
+## Autocomplete setup
 
-Configured automatically on install. To set up manually:
+### Option 1: Import CSS (recommended)
+
+Import `chaiwind.css` in your project (see Setup above). Most modern IDEs will automatically provide autocomplete.
+
+### Option 2: VS Code custom data
+
+Add this to `.vscode/settings.json`:
 
 ```json
 {
@@ -164,7 +194,7 @@ Configured automatically on install. To set up manually:
 }
 ```
 
-Add this to `.vscode/settings.json` and restart VS Code.
+Restart VS Code after adding.
 
 ---
 

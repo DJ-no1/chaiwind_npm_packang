@@ -1,20 +1,26 @@
 {
   "name": "chaiwind",
-  "version": "2.0.0",
+  "version": "2.1.1",
   "description": "Bounty Jitenge hum Hehe",
   "main": "chaiwind.js",
-  
   "scripts": {
-  "postinstall": "node scripts/postinstall.js"
-},
-"files": [
+    "postinstall": "node scripts/postinstall.js"
+  },
+  "files": [
     "chaiwind.js",
+    "chaiwind.css",
     "chaiwind.css-data.json",
     "scripts/postinstall.js",
+    "demo/",
     "README.md"
   ],
-  "keywords": ["css", "utility", "framework", "chaicode" , "inline-style"],
-
+  "keywords": [
+    "css",
+    "utility",
+    "framework",
+    "chaicode",
+    "inline-style"
+  ],
   "author": "anand",
   "license": "MIT",
   "type": "commonjs"

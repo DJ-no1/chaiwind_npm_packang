@@ -1,339 +1,383 @@
 (function () {
+  // ─── TOKENS ───────────────────────────────────────────────────────────────
+  // same tokens as before — just used for lookup, not for building CSS strings
 
-  // ---------------------------------------------------------------------------
-  // tokens
-  // ---------------------------------------------------------------------------
-
-  var colors = {
+  const colors = {
     // chaicode brand
-    'chaicode':      '#f97316',
-    'chaicode-dark': '#1a1a2e',
+    chaicode: "#f97316",
+    "chaicode-dark": "#1a1a2e",
 
-    // hitesh sir
-    'chai':    '#c8843a',
-    'adrak':   '#d4a056',
-    'masala':  '#8b4513',
-    'kulhad':  '#b5651d',
+    //  hitesh sir
+    chai: "#c8843a",
+    adrak: "#d4a056",
+    masala: "#8b4513",
+    kulhad: "#b5651d",
+    tapri: "#6b3a2a",
+    dudh: "#f5f0e8",
 
-    // piyush sir
-    'piyush':      '#ec4899',
-    'piyush-dark': '#be185d',
+    //  piyush sir
+    piyush: "#ec4899",
+    "piyush-light": "#f9a8d4",
+    "piyush-dark": "#be185d",
+    rose: "#fb7185",
+    blush: "#fce7f3",
+    fuschia: "#d946ef",
 
-    // akash sir
-    'midnight':  '#1d1d1f',
-    'silver':    '#e8e8ed',
+    //  akash sir
+    midnight: "#1d1d1f",
+    spacegray: "#86868b",
+    silver: "#e8e8ed",
+    starlight: "#f5f1eb",
+    "macos-blue": "#0071e3",
+    "macos-green": "#34c759",
+    "macos-red": "#ff3b30",
+    aluminum: "#d1d1d6",
 
-    // general
-    'white': '#ffffff',
-    'black': '#000000',
-    'gray':  '#6b7280',
-    'red':   '#ef4444',
-    'green': '#22c55e',
-    'blue':  '#3b82f6',
-  }
+    // basics
+    white: "#ffffff",
+    black: "#000000",
+    gray: "#6b7280",
+    red: "#ef4444",
+    green: "#22c55e",
+    blue: "#3b82f6",
+    yellow: "#eab308",
+    purple: "#a855f7",
+    orange: "#f97316",
+    pink: "#ec4899",
+    teal: "#14b8a6",
+    indigo: "#6366f1",
+  };
 
-  var spacing = {
-    '0':  '0px',
-    '1':  '4px',
-    '2':  '8px',
-    '3':  '12px',
-    '4':  '16px',
-    '6':  '24px',
-    '8':  '32px',
-    '10': '40px',
-    '12': '48px',
-  }
+  const spacing = {
+    0: "0px",
+    1: "4px",
+    2: "8px",
+    3: "12px",
+    4: "16px",
+    5: "20px",
+    6: "24px",
+    7: "28px",
+    8: "32px",
+    9: "36px",
+    10: "40px",
+    12: "48px",
+    16: "64px",
+    20: "80px",
+    24: "96px",
+  };
 
-  var fontSizes = {
-    'xs':   '12px',
-    'sm':   '14px',
-    'base': '16px',
-    'lg':   '20px',
-    'xl':   '24px',
-    '2xl':  '32px',
-  }
+  const fontSizes = {
+    xs: "11px",
+    sm: "13px",
+    base: "16px",
+    lg: "18px",
+    xl: "20px",
+    "2xl": "24px",
+    "3xl": "30px",
+    "4xl": "36px",
+    "5xl": "48px",
+  };
 
-  var radii = {
-    'none': '0px',
-    'sm':   '4px',
-    'md':   '8px',
-    'lg':   '12px',
-    'full': '9999px',
-  }
+  const radii = {
+    none: "0px",
+    sm: "4px",
+    md: "8px",
+    lg: "12px",
+    xl: "16px",
+    "2xl": "24px",
+    full: "9999px",
+  };
 
-  // ---------------------------------------------------------------------------
-  // prefix map
-  //
-  // each entry: prefix -> { map: tokenMap, props: [cssProp, ...] }
-  // multi-value props e.g. px- sets both paddingLeft and paddingRight
-  //
-  // FIX: stored as array of pairs (not object) so order is guaranteed
-  // FIX: sorted longest-first so px- is checked before p-, mx- before m- etc.
-  // ---------------------------------------------------------------------------
+  const shadows = {
+    sm: "0 1px 3px rgba(0,0,0,0.10)",
+    md: "0 4px 12px rgba(0,0,0,0.12)",
+    lg: "0 8px 24px rgba(0,0,0,0.15)",
+    xl: "0 16px 48px rgba(0,0,0,0.20)",
+    chai: "0 4px 20px rgba(200,132,58,0.35)",
+    piyush: "0 4px 20px rgba(236,72,153,0.30)",
+    mac: "0 8px 32px rgba(29,29,31,0.25)",
+    none: "none",
+  };
 
-  var prefixEntries = [
-    ['px-',       { map: spacing,   props: ['paddingLeft', 'paddingRight'] }],
-    ['py-',       { map: spacing,   props: ['paddingTop', 'paddingBottom'] }],
-    ['pt-',       { map: spacing,   props: ['paddingTop'] }],
-    ['pb-',       { map: spacing,   props: ['paddingBottom'] }],
-    ['pl-',       { map: spacing,   props: ['paddingLeft'] }],
-    ['pr-',       { map: spacing,   props: ['paddingRight'] }],
-    ['p-',        { map: spacing,   props: ['padding'] }],
-    ['mx-',       { map: spacing,   props: ['marginLeft', 'marginRight'] }],
-    ['my-',       { map: spacing,   props: ['marginTop', 'marginBottom'] }],
-    ['mt-',       { map: spacing,   props: ['marginTop'] }],
-    ['mb-',       { map: spacing,   props: ['marginBottom'] }],
-    ['ml-',       { map: spacing,   props: ['marginLeft'] }],
-    ['mr-',       { map: spacing,   props: ['marginRight'] }],
-    ['m-',        { map: spacing,   props: ['margin'] }],
-    ['gap-',      { map: spacing,   props: ['gap'] }],
-    ['w-',        { map: spacing,   props: ['width'] }],
-    ['h-',        { map: spacing,   props: ['height'] }],
-    ['bg-',       { map: colors,    props: ['backgroundColor'] }],
-    ['text-',     { map: colors,    props: ['color'] }],
-    ['border-',   { map: colors,    props: ['borderColor'] }],
-    ['fs-',       { map: fontSizes, props: ['fontSize'] }],
-    ['rounded-',  { map: radii,     props: ['borderRadius'] }],
-  ]
+  // ─── PARSER ─────────────────────────────────
+  // takes one element + one class name
+  // parses the class → applies inline style → removes class
 
-  // ---------------------------------------------------------------------------
-  // statics map
-  //
-  // exact-match classes that do not follow the prefix+token pattern
-  // one object lookup replaces 40+ individual if blocks
-  // ---------------------------------------------------------------------------
+  function applyClass(el, cls) {
+    // strip 'chai-' prefix → 'p-4' or 'bg-chai' or 'text-center' etc
+    const raw = cls.slice(5); // removes 'chai-'
+    const dashIndex = raw.indexOf("-"); // find first dash
 
-  var statics = {
-    // display
-    'block':         { display: 'block' },
-    'inline':        { display: 'inline' },
-    'inline-block':  { display: 'inline-block' },
-    'flex':          { display: 'flex' },
-    'grid':          { display: 'grid' },
-    'hidden':        { display: 'none' },
+    // if no dash → single word utility like 'chai-flex', 'chai-block'
+    const utility = dashIndex === -1 ? raw : raw.slice(0, dashIndex);
+    const value = dashIndex === -1 ? "" : raw.slice(dashIndex + 1);
 
-    // flexbox
-    'flex-row':        { flexDirection: 'row' },
-    'flex-col':        { flexDirection: 'column' },
-    'flex-wrap':       { flexWrap: 'wrap' },
-    'flex-1':          { flex: '1 1 0%' },
-    'items-start':     { alignItems: 'flex-start' },
-    'items-center':    { alignItems: 'center' },
-    'items-end':       { alignItems: 'flex-end' },
-    'justify-start':   { justifyContent: 'flex-start' },
-    'justify-center':  { justifyContent: 'center' },
-    'justify-end':     { justifyContent: 'flex-end' },
-    'justify-between': { justifyContent: 'space-between' },
+    // resolve color token or fall back to raw value (e.g. 'red', '#fff')
+    const color = colors[value] || value;
+    const space = spacing[value] || value;
+    const size = fontSizes[value];
+    const radius = radii[value] || value;
+    const shadow = shadows[value] || value;
 
-    // sizing
-    'w-full':   { width: '100%' },
-    'w-screen': { width: '100vw' },
-    'w-auto':   { width: 'auto' },
-    'h-full':   { height: '100%' },
-    'h-screen': { height: '100vh' },
-    'h-auto':   { height: 'auto' },
+    switch (utility) {
+      // ── spacing ───────────────────────────────────────────────────────────
+      case "p":
+        el.style.padding = space;
+        break;
+      case "px":
+        el.style.paddingLeft = space;
+        el.style.paddingRight = space;
+        break;
+      case "py":
+        el.style.paddingTop = space;
+        el.style.paddingBottom = space;
+        break;
+      case "pt":
+        el.style.paddingTop = space;
+        break;
+      case "pb":
+        el.style.paddingBottom = space;
+        break;
+      case "pl":
+        el.style.paddingLeft = space;
+        break;
+      case "pr":
+        el.style.paddingRight = space;
+        break;
+      case "m":
+        el.style.margin = space;
+        break;
+      case "mx":
+        el.style.marginLeft = space;
+        el.style.marginRight = space;
+        break;
+      case "my":
+        el.style.marginTop = space;
+        el.style.marginBottom = space;
+        break;
+      case "mt":
+        el.style.marginTop = space;
+        break;
+      case "mb":
+        el.style.marginBottom = space;
+        break;
+      case "ml":
+        el.style.marginLeft = space;
+        break;
+      case "mr":
+        el.style.marginRight = space;
+        break;
+      case "gap":
+        el.style.gap = space;
+        break;
 
-    // position
-    'relative': { position: 'relative' },
-    'absolute': { position: 'absolute' },
-    'fixed':    { position: 'fixed' },
-    'sticky':   { position: 'sticky', top: '0' },
+      // ── colors ────────────────────────────────────────────────────────────
+      case "bg":
+        el.style.backgroundColor = color;
+        break;
+      case "border":
+        el.style.border = "1px solid " + color;
+        break;
+      case "outline":
+        el.style.outline = "2px solid " + color;
+        break;
 
-    // text
-    'text-left':    { textAlign: 'left' },
-    'text-center':  { textAlign: 'center' },
-    'text-right':   { textAlign: 'right' },
-    'font-normal':  { fontWeight: '400' },
-    'font-medium':  { fontWeight: '500' },
-    'font-semibold':{ fontWeight: '600' },
-    'font-bold':    { fontWeight: '700' },
-    'uppercase':    { textTransform: 'uppercase' },
-    'lowercase':    { textTransform: 'lowercase' },
-    'capitalize':   { textTransform: 'capitalize' },
-    'italic':       { fontStyle: 'italic' },
-    'underline':    { textDecoration: 'underline' },
-    'no-underline': { textDecoration: 'none' },
-    'truncate':     { overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' },
+      // ── text ──────────────────────────────────────────────────────────────
+      // chai-text-red → color
+      // chai-text-sm  → font size
+      // chai-text-center / left / right / justify → alignment
+      case "text":
+        if (colors[value]) el.style.color = color;
+        else if (fontSizes[value]) el.style.fontSize = size;
+        else el.style.textAlign = value;
+        break;
 
-    // border
-    'border':        { border: '1px solid currentColor' },
-    'border-2':      { border: '2px solid currentColor' },
-    'border-none':   { border: 'none' },
-    'border-dashed': { borderStyle: 'dashed' },
+      // ── font ──────────────────────────────────────────────────────────────
+      case "font":
+        if (value === "bold") el.style.fontWeight = "700";
+        else if (value === "semibold") el.style.fontWeight = "600";
+        else if (value === "medium") el.style.fontWeight = "500";
+        else if (value === "normal") el.style.fontWeight = "400";
+        else if (value === "light") el.style.fontWeight = "300";
+        else if (value === "italic") el.style.fontStyle = "italic";
+        break;
 
-    // overflow
-    'overflow-hidden': { overflow: 'hidden' },
-    'overflow-auto':   { overflow: 'auto' },
+      // ── sizing ────────────────────────────────────────────────────────────
+      case "w":
+        if (value === "full") el.style.width = "100%";
+        else if (value === "screen") el.style.width = "100vw";
+        else if (value === "auto") el.style.width = "auto";
+        else el.style.width = spacing[value] || value;
+        break;
+      case "h":
+        if (value === "full") el.style.height = "100%";
+        else if (value === "screen") el.style.height = "100vh";
+        else if (value === "auto") el.style.height = "auto";
+        else el.style.height = spacing[value] || value;
+        break;
+      case "min":
+        // chai-min-h-screen etc — value = 'h-screen'
+        if (value === "h-screen") el.style.minHeight = "100vh";
+        if (value === "w-full") el.style.minWidth = "100%";
+        break;
+      case "max":
+        if (value === "w-full") el.style.maxWidth = "100%";
+        break;
 
-    // cursor
-    'cursor-pointer':     { cursor: 'pointer' },
-    'cursor-not-allowed': { cursor: 'not-allowed' },
+      // ── border radius ─────────────────────────────────────────────────────
+      case "rounded":
+        el.style.borderRadius = radius;
+        break;
 
-    // misc
-    'select-none':  { userSelect: 'none' },
-    'box-border':   { boxSizing: 'border-box' },
-    'opacity-0':    { opacity: '0' },
-    'opacity-50':   { opacity: '0.5' },
-    'opacity-100':  { opacity: '1' },
-  }
+      // ── shadow ────────────────────────────────────────────────────────────
+      case "shadow":
+        el.style.boxShadow = shadow;
+        break;
 
-  // ---------------------------------------------------------------------------
-  // parse(raw)
-  //
-  // raw = class suffix after stripping 'chai-'
-  // returns a style object or null
-  //
-  // order of checks:
-  //   1. statics exact match  (O1 hash lookup)
-  //   2. prefix entries       (guaranteed longest-first — no partial match bug)
-  // ---------------------------------------------------------------------------
+      // ── opacity ───────────────────────────────────────────────────────────
+      case "opacity":
+        el.style.opacity = String(Number(value) / 100);
+        break;
 
-  function parse(raw) {
-    // 1. exact match
-    if (statics[raw]) return statics[raw]
+      // ── display ───────────────────────────────────────────────────────────
+      case "flex":
+        el.style.display = "flex";
+        break;
+      case "grid":
+        el.style.display = "grid";
+        break;
+      case "block":
+        el.style.display = "block";
+        break;
+      case "hidden":
+        el.style.display = "none";
+        break;
+      case "inline":
+        el.style.display = "inline";
+        break;
 
-    // 2. prefix match — array order is longest-first, so px- beats p-
-    for (var i = 0; i < prefixEntries.length; i++) {
-      var prefix = prefixEntries[i][0]
-      var entry  = prefixEntries[i][1]
+      // ── flex helpers ──────────────────────────────────────────────────────
+      case "items":
+        if (value === "center") el.style.alignItems = "center";
+        if (value === "start") el.style.alignItems = "flex-start";
+        if (value === "end") el.style.alignItems = "flex-end";
+        break;
+      case "justify":
+        if (value === "center") el.style.justifyContent = "center";
+        if (value === "start") el.style.justifyContent = "flex-start";
+        if (value === "end") el.style.justifyContent = "flex-end";
+        if (value === "between") el.style.justifyContent = "space-between";
+        if (value === "around") el.style.justifyContent = "space-around";
+        break;
+      case "flex-col":
+        el.style.flexDirection = "column";
+        break;
+      case "flex-row":
+        el.style.flexDirection = "row";
+        break;
+      case "flex-wrap":
+        el.style.flexWrap = "wrap";
+        break;
 
-      if (raw.indexOf(prefix) !== 0) continue
+      // ── position ──────────────────────────────────────────────────────────
+      case "relative":
+        el.style.position = "relative";
+        break;
+      case "absolute":
+        el.style.position = "absolute";
+        break;
+      case "fixed":
+        el.style.position = "fixed";
+        break;
+      case "sticky":
+        el.style.position = "sticky";
+        break;
 
-      var token = raw.slice(prefix.length)
-      var value = entry.map[token]
+      // ── overflow ──────────────────────────────────────────────────────────
+      case "overflow":
+        el.style.overflow = value;
+        break;
 
-      if (!value) continue
+      // ── cursor ────────────────────────────────────────────────────────────
+      case "cursor":
+        el.style.cursor = value;
+        break;
 
-      var style = {}
-      for (var j = 0; j < entry.props.length; j++) {
-        style[entry.props[j]] = value
-      }
-      return style
+      // ── misc ──────────────────────────────────────────────────────────────
+      case "uppercase":
+        el.style.textTransform = "uppercase";
+        break;
+      case "lowercase":
+        el.style.textTransform = "lowercase";
+        break;
+      case "capitalize":
+        el.style.textTransform = "capitalize";
+        break;
+      case "underline":
+        el.style.textDecoration = "underline";
+        break;
+      case "line-through":
+        el.style.textDecoration = "line-through";
+        break;
+      case "italic":
+        el.style.fontStyle = "italic";
+        break;
+      case "truncate":
+        el.style.overflow = "hidden";
+        el.style.textOverflow = "ellipsis";
+        el.style.whiteSpace = "nowrap";
+        break;
+      case "transition":
+        el.style.transition = "all 150ms ease";
+        break;
+      case "select-none":
+        el.style.userSelect = "none";
+        break;
+
+      default:
+        // unknown class — silently skip
+        break;
     }
 
-    return null
+    // requirement: remove the chai- class after applying
+    el.classList.remove(cls);
   }
 
-  // ---------------------------------------------------------------------------
-  // hasChai(el)
-  //
-  // FIX: early exit check — called before any processing
-  // avoids running parse() on elements that have no chai- classes at all
-  // critical for MutationObserver performance in JS-heavy apps
-  // ---------------------------------------------------------------------------
-
-  function hasChai(el) {
-    if (!el || !el.classList) return false
-    var list = el.classList
-    for (var i = 0; i < list.length; i++) {
-      if (list[i].indexOf('chai-') === 0) return true
-    }
-    return false
-  }
-
-  // ---------------------------------------------------------------------------
-  // apply(el)
-  //
-  // runs parse() on each chai-* class of one element
-  // applies inline styles and removes the processed class
-  //
-  // FIX: nodeType check — skips text nodes and comment nodes
-  // FIX: stores processed classes in data-chaiwind attr before removing
-  //      so other scripts can still read what was applied
-  // ---------------------------------------------------------------------------
-
-  function apply(el) {
-    if (!el || el.nodeType !== 1) return
-    if (!hasChai(el)) return
-
-    var applied = []
-    var toRemove = []
-    var classes = Array.from(el.classList)
-
-    for (var i = 0; i < classes.length; i++) {
-      var cls = classes[i]
-      if (cls.indexOf('chai-') !== 0) continue
-
-      var styles = parse(cls.slice(5))
-      if (!styles) continue
-
-      Object.assign(el.style, styles)
-      applied.push(cls)
-      toRemove.push(cls)
-    }
-
-    // record what was applied before removing (FIX: class removed permanently)
-    if (applied.length) {
-      el.setAttribute('data-chaiwind', applied.join(' '))
-    }
-
-    for (var k = 0; k < toRemove.length; k++) {
-      el.classList.remove(toRemove[k])
-    }
-  }
-
-  // ---------------------------------------------------------------------------
-  // scan()
-  //
-  // runs apply() on every element in the DOM at call time
-  // ---------------------------------------------------------------------------
+  // ─── SCANNER ──────────────────────────────────────────────────────────────
+  // traverses the full DOM once
+  // finds every element that has at least one chai- class
+  // applies all chai- classes on that element
 
   function scan() {
-    var elements = document.querySelectorAll('[class]')
-    for (var i = 0; i < elements.length; i++) {
-      apply(elements[i])
-    }
-  }
+    const elements = document.querySelectorAll("[class]");
 
-  // ---------------------------------------------------------------------------
-  // watch()
-  //
-  // observes DOM for elements added after initial load
-  //
-  // FIX: hasChai() called first on every added node — skips nodes with no
-  //      chai- classes immediately, near-zero cost in React/Vue apps
-  // FIX: nodeType check inside apply() handles text/comment nodes safely
-  // ---------------------------------------------------------------------------
+    elements.forEach(function (el) {
+      // snapshot classList into array first
+      // because we're removing classes mid-loop
+      const classes = Array.from(el.classList);
 
-  function watch() {
-    var observer = new MutationObserver(function (mutations) {
-      for (var i = 0; i < mutations.length; i++) {
-        var added = mutations[i].addedNodes
-        for (var j = 0; j < added.length; j++) {
-          var node = added[j]
-
-          // apply to the node itself
-          apply(node)
-
-          // apply to any children inside it
-          if (node.querySelectorAll) {
-            var children = node.querySelectorAll('[class]')
-            for (var k = 0; k < children.length; k++) {
-              apply(children[k])
-            }
-          }
+      classes.forEach(function (cls) {
+        if (cls.startsWith("chai-")) {
+          applyClass(el, cls);
         }
-      }
-    })
+      });
+    });
 
-    observer.observe(document.body, { childList: true, subtree: true })
+    console.log(
+      "%c☕ chaiwind done — DOM scanned",
+      "color: #c8843a; font-weight: bold; font-size: 13px;",
+    );
   }
 
-  // ---------------------------------------------------------------------------
-  // init
-  //
-  // FIX: readyState check handles script in <head> vs end of <body>
-  // recommendation: place script at bottom of <body> to avoid timing edge cases
-  // ---------------------------------------------------------------------------
+  // ─── INIT ─────────────────────────────────────────────────────────────────
+  // run scan() only after HTML is fully parsed
+  // handles both cases: script in head vs script at end of body
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function () {
-      scan()
-      watch()
-    })
+  if (document.readyState === "loading") {
+    // HTML not done parsing yet — wait for it
+    document.addEventListener("DOMContentLoaded", scan);
   } else {
-    scan()
-    watch()
+    // HTML already parsed (script is at bottom of body)
+    scan();
   }
-
-})()
+})();
